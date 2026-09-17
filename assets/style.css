@@ -1,0 +1,490 @@
+/* =========================================================
+   1. RESET
+========================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+:root {
+  --text-color: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.7);
+  --text-faint: rgba(255, 255, 255, 0.45);
+
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.14);
+  --glass-border: rgba(255, 255, 255, 0.15);
+
+  --radius-lg: 20px;
+  --radius-md: 18px;
+  --radius-full: 999px;
+
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --shadow-btn: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+  --space-1: 6px;
+  --space-2: 12px;
+  --space-3: 18px;
+  --space-4: 28px;
+
+  --accent: #f2c14e;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* =========================================================
+   2. BODY / BACKGROUND
+========================================================= */
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+  padding: 40px 16px;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px) saturate(1.05);
+  transform: scale(1.08); /* hide blur edges */
+  z-index: -3;
+}
+
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 10, 16, 0.55) 0%,
+    rgba(8, 10, 16, 0.72) 45%,
+    rgba(6, 8, 14, 0.88) 100%
+  );
+  z-index: -2;
+}
+
+.bg-vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* =========================================================
+   3. MAIN CONTAINER
+========================================================= */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4) var(--space-3) var(--space-3);
+}
+
+.share-btn {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  color: var(--text-color);
+  box-shadow: var(--shadow-btn);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.share-btn:hover {
+  transform: scale(1.08);
+  background: var(--glass-bg-hover);
+}
+
+.share-btn:active {
+  transform: scale(0.95);
+}
+
+/* =========================================================
+   4. PROFILE
+========================================================= */
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+.avatar-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: var(--space-3);
+  animation: float 5s ease-in-out infinite;
+}
+
+.avatar-glow {
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #f2c14e,
+    #e0757a,
+    #7a8fe0,
+    #f2c14e
+  );
+  filter: blur(20px);
+  opacity: 0.55;
+  z-index: -1;
+  animation: spin 8s linear infinite;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid rgba(255, 255, 255, 0.75);
+  box-shadow: var(--shadow-soft);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.55rem;
+  letter-spacing: 0.2px;
+  margin-bottom: var(--space-1);
+}
+
+.bio {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin-bottom: var(--space-1);
+}
+
+.description {
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   5. LINK BUTTONS
+========================================================= */
+.links {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.link-btn {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: var(--shadow-btn);
+  color: var(--text-color);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.link-btn:hover,
+.link-btn:focus-visible {
+  transform: translateY(-2px) scale(1.01);
+  background: var(--glass-bg-hover);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.link-btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.link-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.link-icon {
+  font-size: 1.15rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.link-text {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.link-arrow {
+  flex-shrink: 0;
+  opacity: 0.55;
+  font-size: 0.95rem;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.link-btn:hover .link-arrow {
+  transform: translateX(3px);
+  opacity: 0.9;
+}
+
+/* =========================================================
+   6. SOCIAL ICONS
+========================================================= */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: var(--shadow-btn);
+  color: var(--text-color);
+  transition: transform 0.25s ease, background 0.25s ease, filter 0.25s ease;
+}
+
+.social-btn:hover,
+.social-btn:focus-visible {
+  transform: scale(1.1);
+  background: var(--glass-bg-hover);
+  filter: brightness(1.25);
+}
+
+.social-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(15, 16, 22, 0.9);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.social-btn:hover .tooltip,
+.social-btn:focus-visible .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================================================
+   7. FOOTER
+========================================================= */
+.footer {
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.made-with {
+  color: var(--text-faint);
+}
+
+/* =========================================================
+   8. ANIMATIONS
+========================================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Toast (used by share/copy feedback) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(15, 16, 22, 0.92);
+  border: 1px solid var(--glass-border);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    animation: none;
+    opacity: 1;
+  }
+  .avatar-wrap,
+  .avatar-glow {
+    animation: none;
+  }
+  .link-btn,
+  .social-btn,
+  .share-btn,
+  .link-arrow,
+  .toast {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   9. RESPONSIVE DESIGN
+========================================================= */
+
+/* Tablet */
+@media (min-width: 600px) {
+  .card {
+    max-width: 460px;
+    padding: 44px 24px 24px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  .card {
+    max-width: 480px;
+  }
+
+  .link-btn:hover {
+    transform: translateY(-3px) scale(1.015);
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  body {
+    padding: 28px 10px;
+  }
+
+  .card {
+    padding: 32px 8px 12px;
+  }
+
+  .avatar-wrap {
+    width: 84px;
+    height: 84px;
+  }
+
+  .name {
+    font-size: 1.35rem;
+  }
+
+  .link-btn {
+    min-height: 56px;
+    padding: 0 var(--space-2);
+  }
+
+  .social-btn {
+    width: 42px;
+    height: 42px;
+  }
+}
