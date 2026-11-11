@@ -5,6 +5,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const shareBtn = document.getElementById('shareBtn');
   const toast = document.getElementById('toast');
+  const yearEl = document.getElementById('year');
+
+  // Dynamic copyright year
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   let toastTimer = null;
 
@@ -64,4 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (shareBtn) {
     shareBtn.addEventListener('click', handleShare);
   }
+
+  // Links that are not ready yet: show a "coming soon" message instead of opening a page
+  document.querySelectorAll('[data-soon]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('This feature is coming soon !!');
+    });
+  });
 });
